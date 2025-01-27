@@ -23,7 +23,7 @@ public class SecurityConfig {
     @Autowired
     private final AuthenticationProvider authenticationProvider;
 
-    private final String[] PUBLIC_ENDPOINT = {
+    private final String[] PUBLIC_ENDPOINTS = {
             "/api/auth/login",
             "/swagger-ui/**",
             "/v3/api-docs/**",
@@ -50,7 +50,7 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http.csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers(PUBLIC_ENDPOINT).permitAll()
+                        .requestMatchers(PUBLIC_ENDPOINTS).permitAll()
                         .requestMatchers(TRANSPORTER_ENDPOINTS).hasAnyAuthority(Roles.TRANSPORTER.name(), Roles.ADMIN.name())
                         .requestMatchers(ADMIN_ENDPOINTS).hasAuthority(Roles.ADMIN.name())
                         .anyRequest().authenticated()
